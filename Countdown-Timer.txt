@@ -1,0 +1,182 @@
+<div class="countdown-timer" style="background-color: {{ section.settings.bg_color }}; color: {{ section.settings.text_color }}">
+  <p 
+    class="timer-title" 
+    style="color: {{ section.settings.text_color }}; font-size: {{ section.settings.title_font_size }}px;">
+    {{ section.settings.timer_title }}
+  </p>
+  <div 
+    id="timer" 
+    class="timer" 
+    style="background-color: {{ section.settings.timer_color }}; color: {{ section.settings.timer_text_color }}; font-size: {{ section.settings.timer_font_size }}px;">
+    <span id="days"></span> : <span id="hours"></span> : <span id="minutes"></span> : <span id="seconds"></span>
+  </div>
+  <p 
+    class="timer-subtitle" 
+    style="color: {{ section.settings.text_color }}; font-size: {{ section.settings.subtitle_font_size }}px;">
+    {{ section.settings.timer_subtitle }}
+  </p>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var endDate = new Date("{{ section.settings.end_date }}").getTime();
+
+    function updateTimer() {
+      var now = new Date().getTime();
+      var timeRemaining = endDate - now;
+
+      if (timeRemaining > 0) {
+        var days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((timeRemaining % (1000 * 60)) / (1000 * 60));
+        var seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+        document.getElementById("days").textContent = days < 10 ? "0" + days : days;
+        document.getElementById("hours").textContent = hours < 10 ? "0" + hours : hours;
+        document.getElementById("minutes").textContent = minutes < 10 ? "0" + minutes : minutes;
+        document.getElementById("seconds").textContent = seconds < 10 ? "0" + seconds : seconds;
+      } else {
+        document.getElementById("timer").innerHTML = "Sale Ended!";
+      }
+    }
+
+    setInterval(updateTimer, 1000);
+    updateTimer();
+  });
+</script>
+
+<style>
+  .countdown-timer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap; /* Allows stacking on smaller screens */
+    gap: 15px;
+    text-align: center;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+
+  .timer-title,
+  .timer-subtitle {
+    margin: 0;
+    font-weight: bold;
+  }
+
+  #timer {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+  }
+
+  #timer span {
+    margin: 0 2px;
+    color: inherit; /* Inherit the timer text color */
+  }
+
+  /* Large Screens - Align in one line */
+  @media (min-width: 769px) {
+    .countdown-timer {
+      flex-wrap: nowrap; /* Disable wrapping */
+      gap: 20px; /* More space between elements */
+    }
+  }
+
+  /* Mobile Styling */
+  @media (max-width: 768px) {
+.countdown-timer {
+   flex-direction: column; 
+    gap: 5px;
+    padding: 2px;
+}
+    #timer {
+      font-size: 12px !important; /* Reduce timer size for smaller screens */
+    }
+    .timer-title{
+      font-size:18px !important;
+    }
+    .timer-subtitle{
+      font-size:16px !important;
+    }
+  }
+   @media (min-width: 1024px) and (max-width:1440px){
+         .countdown-timer {
+        padding-left: 150px;
+    }
+   }
+</style>
+
+{% schema %}
+{
+  "name": "Countdown Timer",
+  "settings": [
+    {
+      "type": "text",
+      "id": "timer_title",
+      "label": "Title",
+      "default": "Black Friday Sale"
+    },
+    {
+      "type": "number",
+      "id": "title_font_size",
+      "label": "Title Font Size (px)",
+      "default": 18
+    },
+    {
+      "type": "text",
+      "id": "timer_subtitle",
+      "label": "Subtitle",
+      "default": "Save 10% on select products"
+    },
+    {
+      "type": "number",
+      "id": "subtitle_font_size",
+      "label": "Subtitle Font Size (px)",
+      "default": 16
+    },
+    {
+      "type": "text",
+      "id": "end_date",
+      "label": "End Date (e.g., Nov 24, 2024 23:59:59)",
+      "default": "Nov 24, 2024 23:59:59"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "timer_color",
+      "label": "Timer Box Color",
+      "default": "#f5a623"
+    },
+    {
+      "type": "color",
+      "id": "timer_text_color",
+      "label": "Timer Text Color",
+      "default": "#000000"
+    },
+    {
+      "type": "number",
+      "id": "timer_font_size",
+      "label": "Timer Font Size (px)",
+      "default": 16
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bil.dev-Timer",
+      "category": "Promotions"
+    }
+  ]
+}
+{% endschema %}
