@@ -115,7 +115,7 @@
       "type": "text",
       "id": "timer_title",
       "label": "Title",
-      "default": "Black Friday Sale"
+      "default": "11.11 Sale is Live Now"
     },
     {
       "type": "number",
@@ -127,7 +127,7 @@
       "type": "text",
       "id": "timer_subtitle",
       "label": "Subtitle",
-      "default": "Save 10% on select products"
+      "default": "Till 30th November"
     },
     {
       "type": "number",
