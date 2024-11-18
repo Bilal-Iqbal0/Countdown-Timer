@@ -28,12 +28,12 @@
       if (timeRemaining > 0) {
         var days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
         var hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        var minutes = Math.floor((timeRemaining % (1000 * 60)) / (1000 * 60));
+        var minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));  // Fixed calculation for minutes
         var seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
 
         document.getElementById("days").textContent = days < 10 ? "0" + days : days;
         document.getElementById("hours").textContent = hours < 10 ? "0" + hours : hours;
-        document.getElementById("minutes").textContent = minutes < 10 ? "0" + minutes : minutes;
+        document.getElementById("minutes").textContent = minutes < 10 ? "0" + minutes : minutes;  // Display minutes correctly
         document.getElementById("seconds").textContent = seconds < 10 ? "0" + seconds : seconds;
       } else {
         document.getElementById("timer").innerHTML = "Sale Ended!";
@@ -55,6 +55,7 @@
     text-align: center;
     padding: 20px;
     font-family: Arial, sans-serif;
+    /* Removed height: 100vh for removing middle alignment */
   }
 
   .timer-title,
@@ -66,7 +67,8 @@
   #timer {
     display: inline-block;
     padding: 5px 10px;
-    border-radius: 5px;
+    
+    font-size: 16px; /* Timer font size remains as is */
     font-weight: bold;
   }
 
@@ -83,28 +85,12 @@
     }
   }
 
-  /* Mobile Styling */
+  /* Mobile Styling - No font size changes for mobile */
   @media (max-width: 768px) {
-.countdown-timer {
-   flex-direction: column; 
-    gap: 5px;
-    padding: 2px;
-}
-    #timer {
-      font-size: 12px !important; /* Reduce timer size for smaller screens */
-    }
-    .timer-title{
-      font-size:18px !important;
-    }
-    .timer-subtitle{
-      font-size:16px !important;
+    .countdown-timer {
+      flex-direction: column; /* Stack elements vertically */
     }
   }
-   @media (min-width: 1024px) and (max-width:1440px){
-         .countdown-timer {
-        padding-left: 150px;
-    }
-   }
 </style>
 
 {% schema %}
@@ -115,7 +101,7 @@
       "type": "text",
       "id": "timer_title",
       "label": "Title",
-      "default": "11.11 Sale is Live Now"
+      "default": "Black Friday Sale"
     },
     {
       "type": "number",
@@ -127,7 +113,7 @@
       "type": "text",
       "id": "timer_subtitle",
       "label": "Subtitle",
-      "default": "Till 30th November"
+      "default": "Save 10% on select products"
     },
     {
       "type": "number",
@@ -174,7 +160,7 @@
   ],
   "presets": [
     {
-      "name": "Bil.dev-Timer",
+      "name": "Countdown Timer",
       "category": "Promotions"
     }
   ]
